@@ -14,6 +14,8 @@
 #include "adc.h"
 #include "button.h"
 #include "uart.h"
+#include "swtimer.h"
+#include "rtc.h"
 
 
 void appInit(void);

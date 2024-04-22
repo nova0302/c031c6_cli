@@ -106,12 +106,36 @@ bool cliMain(void) {
 			}
 			uartPrintf(cli_ch, "cli# ");
 
+		} else if (rxData == 0x08) {
+			if (cli_buf_index > 0) {
+				cli_buf_index--;
+				uartPrintf(cli_ch, "\b \b");
+			}
 		} else if (cli_buf_index < (128 - 1)) {
 			cli_buf[cli_buf_index++] = rxData;
 			uartWrite(cli_ch, &rxData, 1);
 		}
 	}
-
 	return ret;
-
 }
+bool cliIsStr(const char *p_arg, const char *p_str){
+	bool ret = false;
+	if (strcmp(p_arg, p_str) == 0) {
+		ret = true;
+	}
+	return ret;
+}
+int32_t cliGetData(const char *p_arg){
+	int32_t ret;
+	ret = (int32_t)strtoul(p_arg, (char**)NULL, 0);
+}
+
+bool cliKeepLoop(void){
+	bool ret = false;
+	if (uartAvailable(cli_ch) == 0) {
+		ret = true;
+	}
+	return ret;
+}
+
+
